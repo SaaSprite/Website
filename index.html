@@ -3,108 +3,211 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SaaSprite AI | Enterprise Artificial Intelligence Solutions</title>
+    <title>SaaSprite AI | Global Enterprise Software Solutions</title>
+    
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&family=IBM+Plex+Sans+Arabic:wght@300;400;600;700&display=swap" rel="stylesheet">
     
     <style>
-        body { font-family: 'Plus Jakarta Sans', 'IBM Plex Sans Arabic', sans-serif; background-color: #020617; color: #f8fafc; }
-        .glass-card { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 24px; transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
-        .glass-card:hover { background: rgba(255, 255, 255, 0.06); border-color: #10b981; transform: translateY(-10px); box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4); }
-        .gradient-text { background: linear-gradient(90deg, #10b981, #3b82f6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .hero-glow { position: absolute; top: -10%; left: 50%; transform: translateX(-50%); width: 60%; height: 60%; background: radial-gradient(circle, rgba(16, 185, 129, 0.1) 0%, transparent 70%); z-index: -1; }
-        .nav-blur { backdrop-filter: blur(20px); background: rgba(2, 6, 23, 0.8); border-bottom: 1px solid rgba(255, 255, 255, 0.05); }
+        :root {
+            --primary-emerald: #10b981;
+            --deep-navy: #020617;
+        }
+        body { 
+            font-family: 'IBM Plex Sans Arabic', 'Plus Jakarta Sans', sans-serif; 
+            background-color: var(--deep-navy); 
+            color: #f8fafc; 
+            margin: 0;
+        }
+        .glass-card { 
+            background: rgba(255, 255, 255, 0.02); 
+            backdrop-filter: blur(12px); 
+            border: 1px solid rgba(255, 255, 255, 0.05); 
+            border-radius: 24px; 
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1); 
+        }
+        .glass-card:hover { 
+            background: rgba(16, 185, 129, 0.05); 
+            border-color: var(--primary-emerald); 
+            transform: translateY(-12px); 
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5); 
+        }
+        .gradient-text { 
+            background: linear-gradient(135deg, #10b981 0%, #3b82f6 100%); 
+            -webkit-background-clip: text; 
+            -webkit-text-fill-color: transparent; 
+        }
+        .hero-glow { 
+            position: absolute; 
+            top: -20%; 
+            left: 50%; 
+            transform: translateX(-50%); 
+            width: 80%; 
+            height: 80%; 
+            background: radial-gradient(circle, rgba(16, 185, 129, 0.08) 0%, transparent 60%); 
+            z-index: -1; 
+        }
+        .nav-blur { 
+            backdrop-filter: blur(25px); 
+            background: rgba(2, 6, 23, 0.85); 
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05); 
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            transition: all 0.3s ease;
+        }
+        .btn-primary:hover {
+            box-shadow: 0 0 25px rgba(16, 185, 129, 0.4);
+            transform: scale(1.05);
+        }
     </style>
 </head>
-<body>
+<body class="overflow-x-hidden">
 
-    <nav class="fixed w-full z-50 nav-blur px-6 py-4">
+    <nav class="fixed w-full z-50 nav-blur px-8 py-5">
         <div class="max-w-7xl mx-auto flex justify-between items-center">
-            <div class="flex items-center gap-3">
+            <div class="flex items-center gap-4">
                 <img src="assets/img/logo.png" alt="SaaSprite Logo" class="h-10 w-auto">
-                <span class="text-xl font-bold tracking-tight">SaaSprite <span class="text-emerald-500">AI</span></span>
+                <div class="flex flex-col">
+                    <span class="text-xl font-black tracking-tight leading-none">SaaSprite <span class="text-emerald-500">AI</span></span>
+                    <span class="text-[10px] text-slate-500 uppercase tracking-[0.2em]">Enterprise Solutions</span>
+                </div>
             </div>
-            <div class="hidden md:flex gap-8 text-sm font-medium text-slate-400">
+            <div class="hidden lg:flex gap-10 text-sm font-semibold text-slate-400">
                 <a href="#services" class="hover:text-emerald-400 transition-colors">الخدمات</a>
-                <a href="#solutions" class="hover:text-emerald-400 transition-colors">الحلول</a>
-                <a href="#about" class="hover:text-emerald-400 transition-colors">عن الشركة</a>
+                <a href="#solutions" class="hover:text-emerald-400 transition-colors">الحلول التقنية</a>
+                <a href="#about" class="hover:text-emerald-400 transition-colors">عن المؤسسة</a>
             </div>
-            <a href="#contact" class="bg-emerald-600 hover:bg-emerald-500 text-white px-6 py-2.5 rounded-full text-sm font-semibold transition-all shadow-lg shadow-emerald-900/20">اتصل بنا</a>
+            <button class="btn-primary text-white px-8 py-3 rounded-xl text-sm font-bold">ابدأ رحلتك الرقمية</button>
         </div>
     </nav>
 
-    <section class="relative pt-32 pb-20 px-6 overflow-hidden">
+    <section class="relative min-h-screen flex items-center pt-20 px-6 overflow-hidden">
         <div class="hero-glow"></div>
-        <div class="max-w-7xl mx-auto text-center">
-            <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-slate-900/50 border border-slate-800 mb-8 animate__animated animate__fadeInDown">
+        <div class="max-w-7xl mx-auto text-center relative z-10">
+            <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-500/10 border border-emerald-500/20 mb-8 animate__animated animate__fadeInDown">
                 <span class="relative flex h-2 w-2">
                     <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
                     <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
                 </span>
-                <span class="text-xs font-semibold tracking-wider uppercase text-emerald-400">مستقبل الذكاء الاصطناعي يبدأ هنا</span>
+                <span class="text-xs font-bold tracking-widest uppercase text-emerald-400">نبتكر اليوم لتسود غداً</span>
             </div>
-            <h1 class="text-5xl md:text-7xl font-extrabold mb-8 leading-tight animate__animated animate__fadeIn">
-                نصمم حلول <span class="gradient-text">الذكاء الاصطناعي</span> <br> للمؤسسات العالمية
+            <h1 class="text-5xl md:text-8xl font-black mb-10 leading-[1.1] animate__animated animate__fadeIn">
+                هندسة <span class="gradient-text">المستقبل الرقمي</span> <br> للمؤسسات العالمية
             </h1>
-            <p class="text-slate-400 text-lg md:text-xl max-w-2xl mx-auto mb-12 leading-relaxed">
-                في SaaSprite، ندمج الابتكار بالاحترافية لنحول البيانات إلى قرارات، والعمليات اليدوية إلى أنظمة آلية ذكية تسبق الزمن.
+            <p class="text-slate-400 text-lg md:text-2xl max-w-3xl mx-auto mb-14 leading-relaxed font-light">
+                نقدم حلولاً برمجية متكاملة تعيد تعريف كفاءة الأعمال عبر الذكاء الاصطناعي والأتمتة المتقدمة.
             </p>
-            <div class="flex flex-col md:flex-row gap-4 justify-center items-center">
-                <button class="w-full md:w-auto px-8 py-4 bg-white text-black font-bold rounded-2xl hover:bg-emerald-500 hover:text-white transition-all duration-300">ابدأ مشروعك الآن</button>
-                <button class="w-full md:w-auto px-8 py-4 bg-slate-900 border border-slate-800 text-white font-bold rounded-2xl hover:bg-slate-800 transition-all">استعرض خدماتنا</button>
+            <div class="flex flex-col md:flex-row gap-6 justify-center items-center">
+                <a href="#services" class="w-full md:w-auto px-10 py-5 bg-white text-black font-black rounded-2xl hover:bg-emerald-500 hover:text-white transition-all duration-300 shadow-2xl">استكشف خدماتنا</a>
+                <a href="#about" class="w-full md:w-auto px-10 py-5 bg-slate-900/50 border border-slate-700 text-white font-bold rounded-2xl hover:bg-slate-800 transition-all backdrop-blur-md">عن SaaSprite</a>
             </div>
         </div>
     </section>
 
-    <section id="services" class="py-24 px-6 relative">
+    <section id="services" class="py-32 px-6 bg-slate-950/50">
         <div class="max-w-7xl mx-auto">
-            <div class="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
-                <div class="max-w-xl">
-                    <h2 class="text-3xl font-bold mb-4 italic text-emerald-400 underline">خدماتنا</h2>
-                    <h3 class="text-4xl font-extrabold">تمكين الشركات بلمسة تقنية ذكية</h3>
+            <div class="flex flex-col md:flex-row justify-between items-end mb-24 gap-8">
+                <div class="max-w-2xl">
+                    <h2 class="text-emerald-500 font-bold mb-4 italic tracking-widest">SERVICES</h2>
+                    <h3 class="text-4xl md:text-6xl font-black">ترسانة تقنية <br> <span class="text-slate-500">تحت تصرفك</span></h3>
                 </div>
-                <p class="text-slate-500 max-w-sm">نحن لا نقدم مجرد برمجيات، بل نقدم عصبًا مركزيًا لنمو أعمالك في عصر الثورة الصناعية الرابعة.</p>
+                <p class="text-slate-400 max-w-sm text-lg leading-relaxed">من التطبيقات البسيطة إلى أنظمة الـ ERP المعقدة، نحن نبني ما يعجز الآخرون عن تصوره.</p>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div class="glass-card p-10">
-                    <div class="w-14 h-14 bg-emerald-500/10 rounded-2xl flex items-center justify-center mb-8">
-                        <svg class="w-8 h-8 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                
+                <div class="glass-card p-12 group">
+                    <div class="w-16 h-16 bg-blue-500/10 rounded-2xl flex items-center justify-center mb-8 text-blue-500 group-hover:scale-110 transition-transform">
+                        <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"></path></svg>
                     </div>
-                    <h4 class="text-2xl font-bold mb-4">أتمتة العمليات (AI Automation)</h4>
-                    <p class="text-slate-400 leading-relaxed">تقليل التكاليف التشغيلية بنسبة تصل إلى 60% من خلال أتمتة المهام المعقدة والمتكررة.</p>
+                    <h4 class="text-2xl font-black mb-4">تطبيقات الموبايل (Native & Cross)</h4>
+                    <p class="text-slate-400 leading-relaxed italic">نطور تطبيقات iOS و Android باستخدام Flutter و React Native لضمان أداء خارق وتجربة مستخدم لا تُنسى.</p>
                 </div>
 
-                <div class="glass-card p-10">
-                    <div class="w-14 h-14 bg-blue-500/10 rounded-2xl flex items-center justify-center mb-8">
-                        <svg class="w-8 h-8 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
+                <div class="glass-card p-12 border-emerald-500/20 shadow-2xl shadow-emerald-500/5 relative overflow-hidden group">
+                    <div class="absolute top-0 right-0 p-4 bg-emerald-500 text-[10px] font-black text-black uppercase tracking-tighter rounded-bl-xl">Best Seller</div>
+                    <div class="w-16 h-16 bg-emerald-500/10 rounded-2xl flex items-center justify-center mb-8 text-emerald-500 group-hover:scale-110 transition-transform">
+                        <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
                     </div>
-                    <h4 class="text-2xl font-bold mb-4">تحليل البيانات التنبؤي</h4>
-                    <p class="text-slate-400 leading-relaxed">قراءة المستقبل من خلال بياناتك الحالية لاتخاذ قرارات استباقية مبنية على حقائق رقمية.</p>
+                    <h4 class="text-2xl font-black mb-4 text-emerald-400">أنظمة ERP وتخصيص Odoo</h4>
+                    <p class="text-slate-400 leading-relaxed">تخصيص كامل لنظام أودو ليتناسب مع هيكلية شركتك، بدءاً من المحاسبة وصولاً إلى إدارة المخازن والموارد البشرية.</p>
                 </div>
 
-                <div class="glass-card p-10">
-                    <div class="w-14 h-14 bg-purple-500/10 rounded-2xl flex items-center justify-center mb-8">
-                        <svg class="w-8 h-8 text-purple-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"></path></svg>
+                <div class="glass-card p-12 group">
+                    <div class="w-16 h-16 bg-purple-500/10 rounded-2xl flex items-center justify-center mb-8 text-purple-500 group-hover:scale-110 transition-transform">
+                        <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path></svg>
                     </div>
-                    <h4 class="text-2xl font-bold mb-4">نماذج LLM المخصصة</h4>
-                    <p class="text-slate-400 leading-relaxed">تطوير نماذج ذكاء اصطناعي توليدي مخصصة ومدربة على بيانات شركتك الخاصة بخصوصية تامة.</p>
+                    <h4 class="text-2xl font-black mb-4">الحلول البرمجية المخصصة</h4>
+                    <p class="text-slate-400 leading-relaxed font-light text-sm">بناء برمجيات معقدة من الصفر مصممة خصيصاً لحل مشاكل عملك الفريدة ورفع الإنتاجية.</p>
+                </div>
+
+                <div class="glass-card p-12 group">
+                    <div class="w-16 h-16 bg-red-500/10 rounded-2xl flex items-center justify-center mb-8 text-red-500 group-hover:scale-110 transition-transform">
+                        <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg>
+                    </div>
+                    <h4 class="text-2xl font-black mb-4">إدارة المراكز الطبية والعيادات</h4>
+                    <p class="text-slate-400 leading-relaxed">نظام رقمي شامل يربط السجلات الصحية بالمواعيد والفوترة، لتقديم رعاية صحية ذكية بلا أخطاء.</p>
+                </div>
+
+                <div class="glass-card p-12 group">
+                    <div class="w-16 h-16 bg-orange-500/10 rounded-2xl flex items-center justify-center mb-8 text-orange-500 group-hover:scale-110 transition-transform">
+                        <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                    </div>
+                    <h4 class="text-2xl font-black mb-4">نظم الحجز عبر الإنترنت</h4>
+                    <p class="text-slate-400 leading-relaxed">حلول حجز فورية للمطاعم، الفنادق، والخدمات المهنية، مع بوابة دفع آمنة وجدولة ذكية.</p>
+                </div>
+
+                <div class="glass-card p-12 group">
+                    <div class="w-16 h-16 bg-indigo-500/10 rounded-2xl flex items-center justify-center mb-8 text-indigo-500 group-hover:scale-110 transition-transform">
+                        <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                    </div>
+                    <h4 class="text-2xl font-black mb-4 text-white">أتمتة العمليات (BPA)</h4>
+                    <p class="text-slate-400 leading-relaxed">تخلص من الأعمال الروتينية. نقوم بأتمتة مسارات العمل لتقليل الجهد البشري بنسبة تصل لـ 70%.</p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section id="solutions" class="py-32 px-6 relative overflow-hidden bg-black">
+        <div class="absolute top-1/2 left-0 w-[500px] h-[500px] bg-blue-500/10 blur-[150px] rounded-full"></div>
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-24">
+                <h3 class="text-4xl md:text-5xl font-black mb-6">حلول ذكاء الأعمال المتقدمة</h3>
+                <div class="h-1.5 w-24 bg-emerald-500 mx-auto rounded-full"></div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+                <div class="p-10 rounded-3xl bg-slate-900/40 border border-white/5 flex gap-8">
+                    <div class="text-emerald-500 text-4xl font-black opacity-20 italic">01</div>
+                    <div>
+                        <h5 class="text-2xl font-bold mb-4">Reputation Intelligence</h5>
+                        <p class="text-slate-400 leading-relaxed">نظام رصد وتحليل السمعة الرقمية باستخدام الـ AI لضمان بقاء علامتك التجارية في الصدارة دائماً.</p>
+                    </div>
+                </div>
+                <div class="p-10 rounded-3xl bg-slate-900/40 border border-white/5 flex gap-8">
+                    <div class="text-blue-500 text-4xl font-black opacity-20 italic">02</div>
+                    <div>
+                        <h5 class="text-2xl font-bold mb-4">Unified Analytics Center</h5>
+                        <p class="text-slate-400 leading-relaxed">مركز تقارير موحد يجمع كافة بيانات مؤسستك في لوحة تحكم واحدة لاتخاذ قرارات مبنية على حقائق.</p>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <footer class="py-20 border-t border-slate-900 px-6">
-        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8">
-            <div class="flex items-center gap-3">
-                <img src="assets/img/logo.png" alt="SaaSprite Logo" class="h-8 w-auto grayscale">
-                <span class="text-slate-500 font-bold">SaaSprite AI © 2026</span>
+    <footer class="py-20 border-t border-white/5 px-8">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-12 text-center md:text-right">
+            <div>
+                <img src="assets/img/logo.png" alt="SaaSprite Logo" class="h-10 w-auto mx-auto md:mx-0 mb-6 grayscale hover:grayscale-0 transition-all">
+                <p class="text-slate-500 text-sm font-medium">© 2026 SaaSprite AI Applications and Services. <br> جميع الحقوق محفوظة.</p>
             </div>
-            <div class="flex gap-6 text-slate-500 text-sm">
-                <a href="#" class="hover:text-white transition-colors">Privacy Policy</a>
-                <a href="#" class="hover:text-white transition-colors">LinkedIn</a>
-                <a href="#" class="hover:text-white transition-colors">Terms of Service</a>
+            <div class="flex gap-10 text-slate-400 font-bold text-sm uppercase tracking-widest">
+                <a href="#" class="hover:text-emerald-500">Privacy</a>
+                <a href="#" class="hover:text-emerald-500">Terms</a>
+                <a href="#" class="hover:text-emerald-500">Contact</a>
             </div>
         </div>
     </footer>
