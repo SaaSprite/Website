@@ -3,169 +3,713 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SaaSprite AI | Intelligent Enterprise Solutions</title>
+    <title>SaaSprite AI | Enterprise Intelligence</title>
     
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&family=IBM+Plex+Sans+Arabic:wght@300;400;600;700&display=swap" rel="stylesheet">
-    
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;700;800&family=IBM+Plex+Sans+Arabic:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#ecfdf5',
+                            100: '#d1fae5',
+                            400: '#34d399',
+                            500: '#10b981', // Emerald Primary
+                            600: '#059669',
+                            900: '#064e3b',
+                        },
+                        dark: {
+                            bg: '#020617', // Slate 950
+                            card: 'rgba(255, 255, 255, 0.03)',
+                            border: 'rgba(255, 255, 255, 0.08)'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                        arabic: ['"IBM Plex Sans Arabic"', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
     <style>
-        :root { --primary: #10b981; --bg: #020617; }
-        body { font-family: 'IBM Plex Sans Arabic', sans-serif; background-color: var(--bg); color: #f8fafc; overflow-x: hidden; }
-        
-        /* الهالة الضوئية التي تلحق الماوس - بأسلوب راقي */
+        /* * GLOBAL STYLES & RESET 
+         * =====================
+         */
+        :root {
+            --cursor-size: 600px;
+            --primary-glow: radial-gradient(circle, rgba(16, 185, 129, 0.15) 0%, transparent 70%);
+        }
+
+        body {
+            background-color: #020617;
+            color: #f8fafc;
+            overflow-x: hidden;
+            /* Logic: Use Arabic font if RTL, otherwise Latin font */
+            font-family: 'IBM Plex Sans Arabic', sans-serif;
+        }
+
+        html[dir="ltr"] body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        /* * PARTICLE CANVAS LAYER 
+         * =====================
+         */
+        #canvas-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            pointer-events: none;
+        }
+
+        /* * MOUSE INTERACTION LAYER 
+         * =======================
+         */
         #mouse-glow {
             position: fixed;
-            width: 800px;
-            height: 800px;
-            background: radial-gradient(circle, rgba(16, 185, 129, 0.05) 0%, transparent 70%);
+            width: var(--cursor-size);
+            height: var(--cursor-size);
+            background: var(--primary-glow);
             border-radius: 50%;
             pointer-events: none;
             transform: translate(-50%, -50%);
-            z-index: 0;
-            transition: width 0.3s, height 0.3s;
+            z-index: -1;
+            transition: opacity 0.5s ease;
+            mix-blend-mode: screen;
         }
 
-        .glass { background: rgba(255, 255, 255, 0.01); backdrop-filter: blur(15px); border: 1px solid rgba(255, 255, 255, 0.05); }
-        .service-card { transition: all 0.4s ease; border: 1px solid rgba(255, 255, 255, 0.03); }
-        .service-card:hover { border-color: var(--primary); transform: translateY(-10px); background: rgba(16, 185, 129, 0.02); }
-        
-        .blog-card { transition: all 0.3s ease; }
-        .blog-card:hover { transform: scale(1.02); }
-        
-        .gradient-text { background: linear-gradient(135deg, #10b981 0%, #3b82f6 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        /* * GLASSMORPHISM UTILITIES 
+         * =======================
+         */
+        .glass {
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .glass-card {
+            background: linear-gradient(145deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.01) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .glass-card:hover {
+            border-color: #10b981;
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px -10px rgba(16, 185, 129, 0.1);
+        }
+
+        /* * TYPOGRAPHY & ANIMATIONS 
+         * =======================
+         */
+        .gradient-text {
+            background: linear-gradient(135deg, #34d399 0%, #3b82f6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-link {
+            position: relative;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0; /* Changed dynamically via JS for RTL */
+            background-color: #10b981;
+            transition: width 0.3s;
+        }
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        /* Bio Page Specific Styles */
+        .bio-btn {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            padding: 1.25rem;
+            margin-bottom: 1rem;
+            border-radius: 1rem;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+        .bio-btn:hover {
+            background: rgba(16, 185, 129, 0.1);
+            border-color: #10b981;
+            padding-inline-start: 1.5rem; /* Logic for RTL padding */
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #020617; }
+        ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #10b981; }
+
+        /* Loader */
+        #loader {
+            position: fixed; inset: 0; background: #020617; z-index: 9999;
+            display: flex; justify-content: center; align-items: center;
+        }
     </style>
 </head>
 <body>
+
+    <div id="loader">
+        <div class="flex flex-col items-center">
+            <i class="fa-solid fa-microchip text-5xl text-brand-500 animate-pulse mb-4"></i>
+            <span class="text-xs uppercase tracking-[0.5em] text-slate-500">Initializing Core...</span>
+        </div>
+    </div>
+
+    <canvas id="canvas-bg"></canvas>
     <div id="mouse-glow"></div>
 
-    <nav class="fixed w-full z-50 top-0 px-6 py-6">
-        <div class="max-w-7xl mx-auto glass rounded-2xl px-8 py-4 flex justify-between items-center">
-            <div class="flex items-center gap-4">
-                <img src="logo.png" alt="SaaSprite" class="h-10">
-                <span class="text-xl font-black tracking-tighter uppercase">SaaSprite <span class="text-emerald-500">AI</span></span>
+    <nav class="fixed w-full z-50 top-0 transition-all duration-300" id="navbar">
+        <div class="max-w-7xl mx-auto px-6 py-4">
+            <div class="glass rounded-2xl px-6 py-3 flex justify-between items-center">
+                
+                <div class="flex items-center gap-3 cursor-pointer" onclick="router.navigate('home')">
+                    <div class="w-10 h-10 bg-gradient-to-br from-brand-500 to-blue-600 rounded-lg flex items-center justify-center text-white font-bold shadow-lg shadow-brand-500/20">
+                        <i class="fa-solid fa-brain"></i>
+                    </div>
+                    <div class="flex flex-col">
+                        <span class="text-lg font-bold tracking-tight uppercase leading-none">SaaSprite <span class="text-brand-500">AI</span></span>
+                        <span class="text-[9px] text-slate-400 uppercase tracking-widest mt-1" data-i18n="tagline_short">Enterprise Solutions</span>
+                    </div>
+                </div>
+
+                <div class="hidden md:flex gap-8 text-xs font-bold uppercase tracking-widest text-slate-400 items-center">
+                    <button onclick="router.navigate('home')" class="nav-link hover:text-white transition-colors" data-i18n="nav_home">Home</button>
+                    <button onclick="router.navigate('services')" class="nav-link hover:text-white transition-colors" data-i18n="nav_services">Services</button>
+                    <button onclick="router.navigate('blog')" class="nav-link hover:text-white transition-colors" data-i18n="nav_blog">Blog</button>
+                    <button onclick="router.navigate('bio')" class="nav-link hover:text-white transition-colors text-brand-400" data-i18n="nav_bio">Connect</button>
+                </div>
+
+                <div class="flex items-center gap-4">
+                    <button onclick="langManager.toggle()" class="text-xs font-mono text-slate-400 hover:text-white border border-slate-700 px-3 py-1 rounded-md transition-all">
+                        <span id="current-lang">EN</span>
+                    </button>
+                    <button onclick="router.navigate('bio')" class="hidden sm:block bg-brand-600 hover:bg-brand-500 text-white text-xs font-black px-5 py-2.5 rounded-xl transition-all shadow-lg shadow-brand-500/20" data-i18n="cta_start">
+                        Start Project
+                    </button>
+                    <button class="md:hidden text-slate-300 text-xl" onclick="mobileMenu.toggle()">
+                        <i class="fa-solid fa-bars"></i>
+                    </button>
+                </div>
             </div>
-            <div class="hidden md:flex gap-10 text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">
-                <a href="#services" class="hover:text-white transition-all">الخدمات</a>
-                <a href="#blog" class="hover:text-white transition-all">المدونة</a>
-                <a href="#contact" class="hover:text-white transition-all">تواصل معنا</a>
-            </div>
-            <button class="bg-emerald-600 text-white text-xs font-black px-6 py-3 rounded-xl hover:bg-emerald-500 transition-all">ابدأ مشروعك</button>
         </div>
     </nav>
 
-    <header class="relative min-h-screen flex items-center justify-center px-6 pt-20">
-        <div class="max-w-5xl text-center z-10">
-            <div class="inline-block px-4 py-1 rounded-full border border-white/10 bg-white/5 text-[10px] font-bold tracking-[0.3em] uppercase mb-8 text-emerald-400 animate__animated animate__fadeInDown">
-                Engineering the next digital era
-            </div>
-            <h1 class="text-6xl md:text-9xl font-black leading-[0.9] tracking-tighter mb-10 animate__animated animate__fadeIn">
-                نصنع الأنظمة <br> <span class="gradient-text">التي لا تنهار</span>
-            </h1>
-            <p class="text-slate-400 text-lg md:text-xl max-w-2xl mx-auto mb-12 font-light leading-relaxed animate__animated animate__fadeIn animate__delay-1s">
-                في SaaSprite، نضع معايير جديدة لهندسة الحلول البرمجية. ندمج الذكاء الاصطناعي بالأتمتة لنبني مستقبلاً مؤسساتياً أكثر ذكاءً وكفاءة.
-            </p>
-            <div class="flex flex-wrap justify-center gap-4 animate__animated animate__fadeIn animate__delay-1s">
-                <a href="#services" class="px-10 py-5 bg-white text-black font-black rounded-2xl hover:scale-105 transition-all shadow-2xl">استكشف الحلول التقنية</a>
-            </div>
+    <main id="app-container" class="pt-32 min-h-screen relative z-10">
+        
+        <div id="view-home" class="page-view animate__animated animate__fadeIn">
+            
+            <section class="relative px-6 pb-20 pt-10 text-center">
+                <div class="max-w-5xl mx-auto">
+                    <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-brand-500/20 bg-brand-500/5 text-[10px] font-bold tracking-[0.2em] uppercase mb-8 text-brand-400 animate__animated animate__fadeInDown">
+                        <span class="w-2 h-2 rounded-full bg-brand-500 animate-pulse"></span>
+                        <span data-i18n="hero_badge">Engineering the Future</span>
+                    </div>
+                    
+                    <h1 class="text-5xl md:text-8xl font-black leading-[1.1] tracking-tighter mb-8">
+                        <span data-i18n="hero_title_1">We Architect</span> <br>
+                        <span class="gradient-text" data-i18n="hero_title_2">Digital Intelligence</span>
+                    </h1>
+                    
+                    <p class="text-slate-400 text-lg md:text-xl max-w-2xl mx-auto mb-12 font-light leading-relaxed" data-i18n="hero_desc">
+                        SaaSprite integrates advanced AI with robust software engineering to build enterprise systems that don't just work—they evolve.
+                    </p>
+                    
+                    <div class="flex flex-col sm:flex-row justify-center gap-4">
+                        <button onclick="router.navigate('services')" class="px-8 py-4 bg-white text-black font-bold rounded-2xl hover:scale-105 transition-transform shadow-xl shadow-white/10" data-i18n="btn_explore">
+                            Explore Solutions
+                        </button>
+                        <button onclick="router.navigate('bio')" class="px-8 py-4 glass text-white font-bold rounded-2xl hover:bg-white/5 transition-colors border border-white/10" data-i18n="btn_contact">
+                            Get in Touch
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <section class="border-y border-white/5 bg-black/20 py-12">
+                <div class="max-w-7xl mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+                    <div class="group">
+                        <h3 class="text-3xl font-black text-white mb-1 group-hover:text-brand-500 transition-colors">99.9%</h3>
+                        <p class="text-[10px] uppercase tracking-widest text-slate-500" data-i18n="stat_uptime">System Uptime</p>
+                    </div>
+                    <div class="group">
+                        <h3 class="text-3xl font-black text-white mb-1 group-hover:text-brand-500 transition-colors">2026</h3>
+                        <p class="text-[10px] uppercase tracking-widest text-slate-500" data-i18n="stat_tech">Ready Tech Stack</p>
+                    </div>
+                    <div class="group">
+                        <h3 class="text-3xl font-black text-white mb-1 group-hover:text-brand-500 transition-colors">+50</h3>
+                        <p class="text-[10px] uppercase tracking-widest text-slate-500" data-i18n="stat_clients">Enterprise Clients</p>
+                    </div>
+                    <div class="group">
+                        <h3 class="text-3xl font-black text-white mb-1 group-hover:text-brand-500 transition-colors">SECURE</h3>
+                        <p class="text-[10px] uppercase tracking-widest text-slate-500" data-i18n="stat_security">Bank-Grade</p>
+                    </div>
+                </div>
+            </section>
         </div>
-    </header>
 
-    <section id="services" class="py-32 px-6">
-        <div class="max-w-7xl mx-auto">
-            <div class="text-center mb-24">
-                <h2 class="text-emerald-500 text-xs font-bold tracking-[0.4em] uppercase mb-4">Core Services</h2>
-                <h3 class="text-4xl md:text-5xl font-black italic">ترسانة تقنية متكاملة</h3>
-            </div>
+        <div id="view-services" class="page-view hidden animate__animated animate__fadeIn">
+            <section class="py-10 px-6">
+                <div class="max-w-7xl mx-auto">
+                    <div class="mb-16">
+                        <h2 class="text-brand-500 text-xs font-bold tracking-[0.4em] uppercase mb-2" data-i18n="srv_label">Our Ecosystem</h2>
+                        <h3 class="text-4xl md:text-5xl font-black" data-i18n="srv_title">Full-Stack Capabilities</h3>
+                    </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div class="service-card glass p-12 rounded-[2.5rem]">
-                    <div class="text-emerald-500 mb-6 font-black italic text-sm">01. ERP System</div>
-                    <h4 class="text-2xl font-black mb-4">تخصيص أنظمة Odoo</h4>
-                    <p class="text-slate-400 text-sm leading-relaxed">نحول نظام أودو إلى محرك نمو مخصص بالكامل ليتناسب مع أدق تفاصيل دورة عمل شركتك.</p>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div class="glass-card p-10 rounded-[2rem] md:col-span-2 group">
+                            <div class="w-14 h-14 rounded-full bg-purple-500/10 flex items-center justify-center text-purple-400 mb-6 text-2xl group-hover:scale-110 transition-transform">
+                                <i class="fa-solid fa-network-wired"></i>
+                            </div>
+                            <h4 class="text-2xl font-bold mb-3" data-i18n="srv_odoo_title">Odoo ERP Customization</h4>
+                            <p class="text-slate-400 text-sm leading-relaxed max-w-lg" data-i18n="srv_odoo_desc">
+                                We don't just install Odoo; we re-engineer it. From supply chain to HR, we build modules that fit your specific workflow like a glove.
+                            </p>
+                            <div class="mt-8 flex gap-3 flex-wrap">
+                                <span class="px-3 py-1 rounded-full border border-white/10 text-[10px] uppercase text-slate-300">Accounting</span>
+                                <span class="px-3 py-1 rounded-full border border-white/10 text-[10px] uppercase text-slate-300">Inventory</span>
+                                <span class="px-3 py-1 rounded-full border border-white/10 text-[10px] uppercase text-slate-300">CRM</span>
+                            </div>
+                        </div>
+
+                        <div class="glass-card p-10 rounded-[2rem] md:col-span-1 group">
+                            <div class="w-14 h-14 rounded-full bg-blue-500/10 flex items-center justify-center text-blue-400 mb-6 text-2xl group-hover:scale-110 transition-transform">
+                                <i class="fa-solid fa-mobile-screen"></i>
+                            </div>
+                            <h4 class="text-2xl font-bold mb-3" data-i18n="srv_app_title">Elite Mobile Apps</h4>
+                            <p class="text-slate-400 text-sm leading-relaxed" data-i18n="srv_app_desc">
+                                Native & Flutter development for brands that target the top 1% of the market. Smooth, secure, and stunning.
+                            </p>
+                        </div>
+
+                        <div class="glass-card p-10 rounded-[2rem] md:col-span-1 group">
+                            <div class="w-14 h-14 rounded-full bg-brand-500/10 flex items-center justify-center text-brand-400 mb-6 text-2xl group-hover:scale-110 transition-transform">
+                                <i class="fa-solid fa-robot"></i>
+                            </div>
+                            <h4 class="text-2xl font-bold mb-3" data-i18n="srv_auto_title">Business Automation</h4>
+                            <p class="text-slate-400 text-sm leading-relaxed" data-i18n="srv_auto_desc">
+                                Reduce operational costs by 60%. We automate repetitive tasks so your team can focus on innovation.
+                            </p>
+                        </div>
+
+                        <div class="glass-card p-10 rounded-[2rem] md:col-span-2 group relative overflow-hidden">
+                             <div class="absolute right-0 bottom-0 opacity-5 text-9xl text-white transform rotate-12 translate-y-10 translate-x-10">
+                                <i class="fa-solid fa-hospital"></i>
+                             </div>
+                            <div class="relative z-10">
+                                <h4 class="text-2xl font-bold mb-3" data-i18n="srv_med_title">Specialized Systems</h4>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-6">
+                                    <div>
+                                        <h5 class="text-brand-400 font-bold mb-2 flex items-center gap-2"><i class="fa-solid fa-stethoscope"></i> Medical Centers</h5>
+                                        <p class="text-slate-500 text-xs">Full clinic management, EMR, and patient portals.</p>
+                                    </div>
+                                    <div>
+                                        <h5 class="text-blue-400 font-bold mb-2 flex items-center gap-2"><i class="fa-solid fa-calendar-check"></i> Booking Engines</h5>
+                                        <p class="text-slate-500 text-xs">Real-time reservation systems for hotels and services.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="service-card glass p-12 rounded-[2.5rem]">
-                    <div class="text-blue-500 mb-6 font-black italic text-sm">02. Mobile Apps</div>
-                    <h4 class="text-2xl font-black mb-4">تطبيقات الموبايل</h4>
-                    <p class="text-slate-400 text-sm leading-relaxed">تطوير تطبيقات نيتف وكروس بلاتفورم (Flutter) تنقل علامتك التجارية إلى فئة النخبة من العملاء.</p>
-                </div>
-                <div class="service-card glass p-12 rounded-[2.5rem]">
-                    <div class="text-purple-500 mb-6 font-black italic text-sm">03. Automation</div>
-                    <h4 class="text-2xl font-black mb-4">أتمتة العمليات</h4>
-                    <p class="text-slate-400 text-sm leading-relaxed">أتمتة مسارات العمل المعقدة لتقليل التدخل البشري ورفع الكفاءة التشغيلية بنسبة 70%.</p>
-                </div>
-            </div>
+            </section>
         </div>
-    </section>
 
-    <section id="blog" class="py-32 px-6 bg-slate-900/10">
-        <div class="max-w-7xl mx-auto">
-            <div class="flex flex-col md:flex-row justify-between items-end mb-20 gap-8">
-                <div class="max-w-xl">
-                    <h2 class="text-emerald-500 font-bold mb-4 uppercase tracking-widest text-xs">Insight Center</h2>
-                    <h3 class="text-4xl md:text-5xl font-black italic">أفكار تقود المستقبل</h3>
-                </div>
-                <p class="text-slate-500 max-w-sm text-sm italic">نشارككم خبراتنا حول التحول الرقمي وأحدث تقنيات عام 2026.</p>
-            </div>
+        <div id="view-blog" class="page-view hidden animate__animated animate__fadeIn">
+            <section class="py-10 px-6">
+                <div class="max-w-7xl mx-auto">
+                    <div class="flex flex-col md:flex-row justify-between items-center mb-16 border-b border-white/5 pb-8">
+                        <div>
+                            <h2 class="text-4xl font-black mb-2" data-i18n="blog_title">SaaSprite <span class="text-slate-600">Insights</span></h2>
+                            <p class="text-slate-400 text-sm" data-i18n="blog_subtitle">Engineering thoughts on the 2026 digital landscape.</p>
+                        </div>
+                        <div class="mt-6 md:mt-0 relative">
+                            <input type="text" placeholder="Search articles..." class="bg-slate-900/50 border border-white/10 rounded-full py-3 px-6 pl-10 text-sm focus:border-brand-500 focus:outline-none w-64">
+                            <i class="fa-solid fa-search absolute left-4 top-4 text-slate-500 text-xs"></i>
+                        </div>
+                    </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div class="blog-card glass rounded-[2rem] overflow-hidden group">
-                    <div class="h-48 bg-emerald-500/10 flex items-center justify-center p-8">
-                        <svg class="w-16 h-16 text-emerald-500 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
-                    </div>
-                    <div class="p-8">
-                        <span class="text-[10px] text-emerald-500 font-bold uppercase tracking-widest">Automation</span>
-                        <h4 class="text-xl font-black mt-4 mb-4 group-hover:text-emerald-400 transition-all">أتمتة الأعمال: كيف تعيد صياغة سير العمل في 2026؟</h4>
-                        <p class="text-slate-500 text-xs leading-relaxed">استعراض لأهم تقنيات الأتمتة التي أصبحت ضرورة حتمية لتقليل التكاليف وزيادة سرعة التنفيذ في المؤسسات الكبرى.</p>
-                    </div>
+                    <div id="blog-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                        </div>
                 </div>
-
-                <div class="blog-card glass rounded-[2rem] overflow-hidden group">
-                    <div class="h-48 bg-blue-500/10 flex items-center justify-center p-8">
-                        <svg class="w-16 h-16 text-blue-500 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"></path></svg>
-                    </div>
-                    <div class="p-8">
-                        <span class="text-[10px] text-blue-500 font-bold uppercase tracking-widest">Web Presence</span>
-                        <h4 class="text-xl font-black mt-4 mb-4 group-hover:text-blue-400 transition-all">لماذا يعتبر الموقع الإلكتروني الفاخر هو "هوية" مشروعك في 2026؟</h4>
-                        <p class="text-slate-500 text-xs leading-relaxed">لم يعد الموقع مجرد صفحة عرض، بل هو الانطباع الأول الذي يحدد مكانتك السوقية ومدى جديتك أمام كبار المستثمرين.</p>
-                    </div>
-                </div>
-
-                <div class="blog-card glass rounded-[2rem] overflow-hidden group">
-                    <div class="h-48 bg-purple-500/10 flex items-center justify-center p-8">
-                        <svg class="w-16 h-16 text-purple-500 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"></path></svg>
-                    </div>
-                    <div class="p-8">
-                        <span class="text-[10px] text-purple-500 font-bold uppercase tracking-widest">Mobile Power</span>
-                        <h4 class="text-xl font-black mt-4 mb-4 group-hover:text-purple-400 transition-all">قوة التطبيقات: طريقك للوصول لشريحة العملاء الراقية</h4>
-                        <p class="text-slate-500 text-xs leading-relaxed">كيف تساهم تطبيقات الهاتف في تعزيز الولاء المؤسساتي ورفع قيمة علامتك التجارية لتستهدف الفئات الأكثر نخبوية.</p>
-                    </div>
-                </div>
-            </div>
+            </section>
         </div>
-    </section>
 
-    <footer class="py-24 px-8 border-t border-white/5 bg-black/20">
-        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-12">
-            <div>
-                <img src="logo.png" alt="SaaSprite" class="h-8 grayscale mb-6">
-                <p class="text-slate-500 text-[10px] font-black uppercase tracking-[0.3em]">SaaSprite AI | Engineered to Lead</p>
-            </div>
-            <div class="flex gap-10 text-slate-400 font-bold text-xs uppercase tracking-widest">
-                <a href="#" class="hover:text-emerald-500 transition-all">Privacy</a>
-                <a href="#" class="hover:text-emerald-500 transition-all">LinkedIn</a>
-                <a href="#" class="hover:text-emerald-500 transition-all">GitHub</a>
-            </div>
+        <div id="view-bio" class="page-view hidden animate__animated animate__fadeIn">
+            <section class="py-10 px-6 min-h-[80vh] flex items-center justify-center">
+                <div class="max-w-md w-full">
+                    
+                    <div class="text-center mb-10">
+                        <div class="w-32 h-32 mx-auto relative mb-6">
+                            <div class="absolute inset-0 bg-brand-500 rounded-full blur-2xl opacity-30 animate-pulse"></div>
+                            <div class="relative w-full h-full bg-slate-900 border-2 border-brand-500 rounded-full flex items-center justify-center overflow-hidden">
+                                <img src="assets/img/logo.png" alt="SaaSprite" class="w-20 opacity-80">
+                            </div>
+                            <div class="absolute bottom-1 right-1 bg-green-500 w-5 h-5 rounded-full border-4 border-slate-900" title="Online"></div>
+                        </div>
+                        <h2 class="text-3xl font-black mb-2">SaaSprite AI</h2>
+                        <p class="text-slate-400 text-sm" data-i18n="bio_role">Enterprise Software House</p>
+                        <p class="text-slate-500 text-xs mt-2 max-w-xs mx-auto">Building the digital infrastructure for tomorrow's leaders.</p>
+                    </div>
+
+                    <div class="space-y-4" id="bio-links">
+                        <a href="#" class="bio-btn group">
+                            <div class="flex items-center gap-4">
+                                <div class="w-8 h-8 rounded-lg bg-blue-600/20 text-blue-500 flex items-center justify-center"><i class="fa-brands fa-linkedin-in"></i></div>
+                                <span class="font-bold text-sm">LinkedIn Profile</span>
+                            </div>
+                            <i class="fa-solid fa-arrow-right text-slate-600 group-hover:text-brand-500 transition-colors"></i>
+                        </a>
+
+                        <a href="https://github.com/SaaSprite" class="bio-btn group">
+                            <div class="flex items-center gap-4">
+                                <div class="w-8 h-8 rounded-lg bg-slate-700/50 text-white flex items-center justify-center"><i class="fa-brands fa-github"></i></div>
+                                <span class="font-bold text-sm">GitHub Repository</span>
+                            </div>
+                            <i class="fa-solid fa-arrow-right text-slate-600 group-hover:text-brand-500 transition-colors"></i>
+                        </a>
+
+                        <a href="mailto:contact@saasprite.com" class="bio-btn group">
+                            <div class="flex items-center gap-4">
+                                <div class="w-8 h-8 rounded-lg bg-emerald-500/20 text-emerald-500 flex items-center justify-center"><i class="fa-solid fa-envelope"></i></div>
+                                <span class="font-bold text-sm" data-i18n="bio_email">Request Quotation</span>
+                            </div>
+                            <i class="fa-solid fa-arrow-right text-slate-600 group-hover:text-brand-500 transition-colors"></i>
+                        </a>
+
+                         <a href="#" class="bio-btn group">
+                            <div class="flex items-center gap-4">
+                                <div class="w-8 h-8 rounded-lg bg-purple-500/20 text-purple-500 flex items-center justify-center"><i class="fa-solid fa-file-pdf"></i></div>
+                                <span class="font-bold text-sm" data-i18n="bio_portfolio">Download Portfolio (PDF)</span>
+                            </div>
+                            <i class="fa-solid fa-download text-slate-600 group-hover:text-brand-500 transition-colors"></i>
+                        </a>
+                    </div>
+
+                    <div class="mt-12 text-center">
+                        <div class="flex justify-center gap-6 text-slate-500 text-lg mb-4">
+                            <i class="fa-brands fa-twitter hover:text-white cursor-pointer transition-colors"></i>
+                            <i class="fa-brands fa-instagram hover:text-white cursor-pointer transition-colors"></i>
+                            <i class="fa-brands fa-dribbble hover:text-white cursor-pointer transition-colors"></i>
+                        </div>
+                        <p class="text-[10px] text-slate-600 uppercase tracking-widest">© 2026 SaaSprite AI</p>
+                    </div>
+                </div>
+            </section>
         </div>
-    </footer>
+
+    </main>
 
     <script>
-        // تتبع حركة الماوس للهالة الضوئية
-        const glow = document.getElementById('mouse-glow');
-        document.addEventListener('mousemove', (e) => {
-            glow.style.left = e.clientX + 'px';
-            glow.style.top = e.clientY + 'px';
+        /**
+         * ------------------------------------------------------------------
+         * DATA LAYER (Content Dictionary)
+         * ------------------------------------------------------------------
+         */
+        const resources = {
+            en: {
+                // Nav
+                nav_home: "Home",
+                nav_services: "Services",
+                nav_blog: "Blog",
+                nav_bio: "Connect",
+                cta_start: "Start Project",
+                tagline_short: "Enterprise Solutions",
+                
+                // Hero
+                hero_badge: "Engineering the Future",
+                hero_title_1: "We Architect",
+                hero_title_2: "Digital Intelligence",
+                hero_desc: "SaaSprite integrates advanced AI with robust software engineering to build enterprise systems that don't just work—they evolve.",
+                btn_explore: "Explore Solutions",
+                btn_contact: "Get in Touch",
+                
+                // Stats
+                stat_uptime: "System Uptime",
+                stat_tech: "Ready Tech Stack",
+                stat_clients: "Enterprise Clients",
+                stat_security: "Bank-Grade Security",
+
+                // Services
+                srv_label: "Core Services",
+                srv_title: "Full-Stack Capabilities",
+                srv_odoo_title: "Odoo ERP Customization",
+                srv_odoo_desc: "We don't just install Odoo; we re-engineer it. From supply chain to HR, we build modules that fit your specific workflow like a glove.",
+                srv_app_title: "Elite Mobile Apps",
+                srv_app_desc: "Native & Flutter development for brands that target the top 1% of the market.",
+                srv_auto_title: "Business Automation",
+                srv_auto_desc: "Reduce operational costs by 60% via intelligent automated workflows.",
+                srv_med_title: "Specialized Systems",
+
+                // Blog
+                blog_title: "SaaSprite",
+                blog_subtitle: "Engineering thoughts on the 2026 digital landscape.",
+                
+                // Bio
+                bio_role: "Global Enterprise Software House",
+                bio_email: "Request Quotation",
+                bio_portfolio: "Download Portfolio (PDF)"
+            },
+            ar: {
+                // Nav
+                nav_home: "الرئيسية",
+                nav_services: "خدماتنا",
+                nav_blog: "المدونة",
+                nav_bio: "تواصل معنا",
+                cta_start: "ابدأ مشروعك",
+                tagline_short: "حلول تقنية للمؤسسات",
+
+                // Hero
+                hero_badge: "نهندس المستقبل",
+                hero_title_1: "نحن نصمم",
+                hero_title_2: "الذكاء الرقمي",
+                hero_desc: "في SaaSprite ندمج الذكاء الاصطناعي مع الهندسة البرمجية لبناء أنظمة مؤسساتية لا تعمل فقط، بل تتطور مع الوقت.",
+                btn_explore: "استكشف خدماتنا",
+                btn_contact: "تواصل معنا",
+
+                // Stats
+                stat_uptime: "استقرار النظام",
+                stat_tech: "تقنيات المستقبل",
+                stat_clients: "عملاء حول العالم",
+                stat_security: "أمان بنكي",
+
+                // Services
+                srv_label: "نظامنا البيئي",
+                srv_title: "قدرات برمجية شاملة",
+                srv_odoo_title: "تخصيص أنظمة Odoo",
+                srv_odoo_desc: "نحن لا نثبت أودو فقط، بل نعيد هندسته. من سلاسل التوريد إلى الموارد البشرية، نبني وحدات تناسب دورة عملك بدقة.",
+                srv_app_title: "تطبيقات النخبة",
+                srv_app_desc: "تطوير تطبيقات Native و Flutter للعلامات التجارية التي تستهدف شريحة النخبة من العملاء.",
+                srv_auto_title: "أتمتة الأعمال",
+                srv_auto_desc: "تقليل التكاليف التشغيلية بنسبة 60% من خلال مسارات عمل ذكية وآلية.",
+                srv_med_title: "أنظمة قطاعية متخصصة",
+
+                // Blog
+                blog_title: "رؤى",
+                blog_subtitle: "أفكار هندسية حول المشهد الرقمي لعام 2026.",
+
+                // Bio
+                bio_role: "بيت برمجيات عالمي",
+                bio_email: "طلب عرض سعر",
+                bio_portfolio: "تحميل الملف التعريفي (PDF)"
+            }
+        };
+
+        const blogPosts = [
+            {
+                id: 1,
+                category: { en: "Automation", ar: "أتمتة الأعمال" },
+                title: { en: "Workflow Automation in 2026", ar: "كيف تعيد الأتمتة صياغة العمل في 2026؟" },
+                desc: { en: "Why manual data entry is killing your profit margins.", ar: "لماذا يعتبر الإدخال اليدوي للبيانات القاتل الأول للأرباح؟" },
+                color: "emerald"
+            },
+            {
+                id: 2,
+                category: { en: "Web Presence", ar: "الويب" },
+                title: { en: "The Luxury Website Standard", ar: "الموقع الإلكتروني كهوية للنخبة" },
+                desc: { en: "Your website is your global HQ. Make it count.", ar: "موقعك هو مقر شركتك العالمي، اجعله يعكس هيبتك." },
+                color: "blue"
+            },
+            {
+                id: 3,
+                category: { en: "Mobile", ar: "تطبيقات" },
+                title: { en: "Apps for High-Net-Worth Clients", ar: "تطبيقات تستهدف كبار العملاء" },
+                desc: { en: "How UX dictates loyalty in the premium sector.", ar: "كيف تحدد تجربة المستخدم (UX) ولاء العملاء في القطاعات الراقية." },
+                color: "purple"
+            }
+        ];
+
+        /**
+         * ------------------------------------------------------------------
+         * LOGIC CONTROLLERS
+         * ------------------------------------------------------------------
+         */
+
+        // 1. Language Manager
+        const langManager = {
+            current: 'ar', // Default Arabic
+            toggle() {
+                this.current = this.current === 'en' ? 'ar' : 'en';
+                this.update();
+            },
+            update() {
+                const lang = this.current;
+                const dir = lang === 'ar' ? 'rtl' : 'ltr';
+                
+                document.documentElement.lang = lang;
+                document.documentElement.dir = dir;
+                document.getElementById('current-lang').innerText = lang === 'ar' ? 'EN' : 'AR'; // Button shows opposite
+
+                // Update Text Content
+                document.querySelectorAll('[data-i18n]').forEach(el => {
+                    const key = el.getAttribute('data-i18n');
+                    if (resources[lang][key]) {
+                        el.innerText = resources[lang][key];
+                    }
+                });
+
+                // Re-render dynamic content (Blog)
+                router.renderBlog();
+            }
+        };
+
+        // 2. Virtual Router (SPA)
+        const router = {
+            navigate(viewId) {
+                // Hide all views
+                document.querySelectorAll('.page-view').forEach(el => {
+                    el.classList.add('hidden');
+                });
+                
+                // Show target view
+                const target = document.getElementById(`view-${viewId}`);
+                if (target) {
+                    target.classList.remove('hidden');
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                }
+            },
+            renderBlog() {
+                const container = document.getElementById('blog-grid');
+                const lang = langManager.current;
+                
+                container.innerHTML = blogPosts.map(post => `
+                    <div class="glass-card rounded-3xl overflow-hidden group cursor-pointer">
+                        <div class="h-48 bg-${post.color}-500/10 flex items-center justify-center p-8 relative">
+                            <div class="absolute inset-0 bg-gradient-to-t from-[#020617] to-transparent opacity-60"></div>
+                            <i class="fa-solid fa-layer-group text-4xl text-${post.color}-500 opacity-50 group-hover:scale-110 transition-transform"></i>
+                        </div>
+                        <div class="p-8">
+                            <span class="text-[10px] text-${post.color}-400 font-bold uppercase tracking-widest border border-${post.color}-500/30 px-2 py-1 rounded mb-4 inline-block">${post.category[lang]}</span>
+                            <h4 class="text-xl font-bold mb-3 group-hover:text-brand-500 transition-colors">${post.title[lang]}</h4>
+                            <p class="text-slate-500 text-xs leading-relaxed">${post.desc[lang]}</p>
+                            <div class="mt-6 flex items-center gap-2 text-${post.color}-400 text-xs font-bold uppercase tracking-wider group-hover:gap-4 transition-all">
+                                <span>Read Article</span> <i class="fa-solid fa-arrow-${lang === 'ar' ? 'left' : 'right'}"></i>
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+            }
+        };
+
+        // 3. Physics Particle System (The "Math" Part)
+        class ParticleNetwork {
+            constructor(canvasId) {
+                this.canvas = document.getElementById(canvasId);
+                this.ctx = this.canvas.getContext('2d');
+                this.particles = [];
+                this.resize();
+                
+                window.addEventListener('resize', () => this.resize());
+                this.initParticles();
+                this.animate();
+            }
+
+            resize() {
+                this.canvas.width = window.innerWidth;
+                this.canvas.height = window.innerHeight;
+            }
+
+            initParticles() {
+                const count = Math.floor(window.innerWidth / 15); // Density math
+                for(let i=0; i<count; i++) {
+                    this.particles.push({
+                        x: Math.random() * this.canvas.width,
+                        y: Math.random() * this.canvas.height,
+                        vx: (Math.random() - 0.5) * 0.5,
+                        vy: (Math.random() - 0.5) * 0.5,
+                        size: Math.random() * 2
+                    });
+                }
+            }
+
+            animate() {
+                this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+                this.ctx.fillStyle = 'rgba(16, 185, 129, 0.3)'; // Brand Color
+                this.ctx.strokeStyle = 'rgba(16, 185, 129, 0.05)';
+
+                this.particles.forEach((p, index) => {
+                    p.x += p.vx;
+                    p.y += p.vy;
+
+                    // Bounce off walls
+                    if(p.x < 0 || p.x > this.canvas.width) p.vx *= -1;
+                    if(p.y < 0 || p.y > this.canvas.height) p.vy *= -1;
+
+                    this.ctx.beginPath();
+                    this.ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+                    this.ctx.fill();
+
+                    // Connect lines (Neural Network Effect)
+                    for(let j=index; j<this.particles.length; j++) {
+                        const p2 = this.particles[j];
+                        const dx = p.x - p2.x;
+                        const dy = p.y - p2.y;
+                        const dist = Math.sqrt(dx*dx + dy*dy);
+
+                        if(dist < 150) {
+                            this.ctx.beginPath();
+                            this.ctx.lineWidth = 1 - (dist/150);
+                            this.ctx.moveTo(p.x, p.y);
+                            this.ctx.lineTo(p2.x, p2.y);
+                            this.ctx.stroke();
+                        }
+                    }
+                });
+                requestAnimationFrame(() => this.animate());
+            }
+        }
+
+        /**
+         * ------------------------------------------------------------------
+         * INITIALIZATION
+         * ------------------------------------------------------------------
+         */
+        window.addEventListener('DOMContentLoaded', () => {
+            // Remove Loader
+            setTimeout(() => {
+                document.getElementById('loader').style.opacity = '0';
+                setTimeout(() => document.getElementById('loader').remove(), 500);
+            }, 1000);
+
+            // Init Systems
+            new ParticleNetwork('canvas-bg');
+            langManager.update(); // Set initial language
+            router.renderBlog(); // Populate blog
+
+            // Mouse Glow Logic
+            const glow = document.getElementById('mouse-glow');
+            document.addEventListener('mousemove', (e) => {
+                glow.style.left = e.clientX + 'px';
+                glow.style.top = e.clientY + 'px';
+            });
         });
+
     </script>
 </body>
 </html>
