@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SaaSprite AI | Enterprise Artificial Intelligence Solutions</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&family=IBM+Plex+Sans+Arabic:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        body { font-family: 'Plus Jakarta Sans', 'IBM Plex Sans Arabic', sans-serif; background-color: #020617; color: #f8fafc; }
+        .glass-card { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 24px; transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+        .glass-card:hover { background: rgba(255, 255, 255, 0.06); border-color: #10b981; transform: translateY(-10px); box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4); }
+        .gradient-text { background: linear-gradient(90deg, #10b981, #3b82f6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .hero-glow { position: absolute; top: -10%; left: 50%; transform: translateX(-50%); width: 60%; height: 60%; background: radial-gradient(circle, rgba(16, 185, 129, 0.1) 0%, transparent 70%); z-index: -1; }
+        .nav-blur { backdrop-filter: blur(20px); background: rgba(2, 6, 23, 0.8); border-bottom: 1px solid rgba(255, 255, 255, 0.05); }
+    </style>
+</head>
+<body>
+
+    <nav class="fixed w-full z-50 nav-blur px-6 py-4">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <div class="flex items-center gap-3">
+                <img src="assets/img/logo.png" alt="SaaSprite Logo" class="h-10 w-auto">
+                <span class="text-xl font-bold tracking-tight">SaaSprite <span class="text-emerald-500">AI</span></span>
+            </div>
+            <div class="hidden md:flex gap-8 text-sm font-medium text-slate-400">
+                <a href="#services" class="hover:text-emerald-400 transition-colors">الخدمات</a>
+                <a href="#solutions" class="hover:text-emerald-400 transition-colors">الحلول</a>
+                <a href="#about" class="hover:text-emerald-400 transition-colors">عن الشركة</a>
+            </div>
+            <a href="#contact" class="bg-emerald-600 hover:bg-emerald-500 text-white px-6 py-2.5 rounded-full text-sm font-semibold transition-all shadow-lg shadow-emerald-900/20">اتصل بنا</a>
+        </div>
+    </nav>
+
+    <section class="relative pt-32 pb-20 px-6 overflow-hidden">
+        <div class="hero-glow"></div>
+        <div class="max-w-7xl mx-auto text-center">
+            <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-slate-900/50 border border-slate-800 mb-8 animate__animated animate__fadeInDown">
+                <span class="relative flex h-2 w-2">
+                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                    <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                </span>
+                <span class="text-xs font-semibold tracking-wider uppercase text-emerald-400">مستقبل الذكاء الاصطناعي يبدأ هنا</span>
+            </div>
+            <h1 class="text-5xl md:text-7xl font-extrabold mb-8 leading-tight animate__animated animate__fadeIn">
+                نصمم حلول <span class="gradient-text">الذكاء الاصطناعي</span> <br> للمؤسسات العالمية
+            </h1>
+            <p class="text-slate-400 text-lg md:text-xl max-w-2xl mx-auto mb-12 leading-relaxed">
+                في SaaSprite، ندمج الابتكار بالاحترافية لنحول البيانات إلى قرارات، والعمليات اليدوية إلى أنظمة آلية ذكية تسبق الزمن.
+            </p>
+            <div class="flex flex-col md:flex-row gap-4 justify-center items-center">
+                <button class="w-full md:w-auto px-8 py-4 bg-white text-black font-bold rounded-2xl hover:bg-emerald-500 hover:text-white transition-all duration-300">ابدأ مشروعك الآن</button>
+                <button class="w-full md:w-auto px-8 py-4 bg-slate-900 border border-slate-800 text-white font-bold rounded-2xl hover:bg-slate-800 transition-all">استعرض خدماتنا</button>
+            </div>
+        </div>
+    </section>
+
+    <section id="services" class="py-24 px-6 relative">
+        <div class="max-w-7xl mx-auto">
+            <div class="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
+                <div class="max-w-xl">
+                    <h2 class="text-3xl font-bold mb-4 italic text-emerald-400 underline">خدماتنا</h2>
+                    <h3 class="text-4xl font-extrabold">تمكين الشركات بلمسة تقنية ذكية</h3>
+                </div>
+                <p class="text-slate-500 max-w-sm">نحن لا نقدم مجرد برمجيات، بل نقدم عصبًا مركزيًا لنمو أعمالك في عصر الثورة الصناعية الرابعة.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="glass-card p-10">
+                    <div class="w-14 h-14 bg-emerald-500/10 rounded-2xl flex items-center justify-center mb-8">
+                        <svg class="w-8 h-8 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                    </div>
+                    <h4 class="text-2xl font-bold mb-4">أتمتة العمليات (AI Automation)</h4>
+                    <p class="text-slate-400 leading-relaxed">تقليل التكاليف التشغيلية بنسبة تصل إلى 60% من خلال أتمتة المهام المعقدة والمتكررة.</p>
+                </div>
+
+                <div class="glass-card p-10">
+                    <div class="w-14 h-14 bg-blue-500/10 rounded-2xl flex items-center justify-center mb-8">
+                        <svg class="w-8 h-8 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
+                    </div>
+                    <h4 class="text-2xl font-bold mb-4">تحليل البيانات التنبؤي</h4>
+                    <p class="text-slate-400 leading-relaxed">قراءة المستقبل من خلال بياناتك الحالية لاتخاذ قرارات استباقية مبنية على حقائق رقمية.</p>
+                </div>
+
+                <div class="glass-card p-10">
+                    <div class="w-14 h-14 bg-purple-500/10 rounded-2xl flex items-center justify-center mb-8">
+                        <svg class="w-8 h-8 text-purple-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"></path></svg>
+                    </div>
+                    <h4 class="text-2xl font-bold mb-4">نماذج LLM المخصصة</h4>
+                    <p class="text-slate-400 leading-relaxed">تطوير نماذج ذكاء اصطناعي توليدي مخصصة ومدربة على بيانات شركتك الخاصة بخصوصية تامة.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="py-20 border-t border-slate-900 px-6">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8">
+            <div class="flex items-center gap-3">
+                <img src="assets/img/logo.png" alt="SaaSprite Logo" class="h-8 w-auto grayscale">
+                <span class="text-slate-500 font-bold">SaaSprite AI © 2026</span>
+            </div>
+            <div class="flex gap-6 text-slate-500 text-sm">
+                <a href="#" class="hover:text-white transition-colors">Privacy Policy</a>
+                <a href="#" class="hover:text-white transition-colors">LinkedIn</a>
+                <a href="#" class="hover:text-white transition-colors">Terms of Service</a>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>
