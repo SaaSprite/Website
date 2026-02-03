@@ -2,15 +2,15 @@
 
 export const resources = {
     en: {
-        // Nav
+        // ... (Nav keys remain same)
         nav_home: "Home",
         nav_services: "Services",
         nav_blog: "Blog",
         nav_bio: "Connect",
         cta_start: "Start Project",
         tagline_short: "Enterprise Solutions",
-        
-        // Hero
+
+        // Hero (Home Page)
         hero_badge: "Engineering the Future",
         hero_title_1: "We Architect",
         hero_title_2: "Digital Intelligence",
@@ -18,13 +18,14 @@ export const resources = {
         btn_explore: "Explore Solutions",
         btn_contact: "Get in Touch",
         
-        // Stats
+        // Stats (Home Page)
         stat_uptime: "System Uptime",
         stat_tech: "Ready Tech Stack",
         stat_clients: "Enterprise Clients",
-        stat_security: "Bank-Grade Security",
+        stat_sec_val: "SECURE",        // <-- New Key
+        stat_security: "Bank-Grade Architecture",
 
-        // Services
+        // ... (Services, Blog, Bio keys remain same)
         srv_label: "Core Services",
         srv_title: "Full-Stack Capabilities",
         srv_odoo_title: "Odoo ERP Customization",
@@ -34,12 +35,12 @@ export const resources = {
         srv_auto_title: "Business Automation",
         srv_auto_desc: "Reduce operational costs by 60% via intelligent automated workflows.",
         srv_med_title: "Specialized Systems",
-        
-        // Blog
+        srv_re_title: "Real Estate OS",
+        srv_re_desc: "For Developers: Manage unit inventory, off-plan sales, and payment plans.",
+        srv_pm_title: "Property Mgmt",
+        srv_pm_desc: "For Leasing: End-to-end tenant management, rent collection, and contracts.",
         blog_title: "SaaSprite",
         blog_subtitle: "Engineering thoughts on the 2026 digital landscape.",
-        
-        // Bio & Contact
         bio_role: "Global Enterprise Software House",
         bio_wa: "WhatsApp Support",
         bio_email: "info@saasprite.com",
@@ -60,21 +61,22 @@ export const resources = {
         cta_start: "ابدأ مشروعك",
         tagline_short: "حلول تقنية للمؤسسات",
 
-        // Hero
-        hero_badge: "نهندس المستقبل",
-        hero_title_1: "نحن نصمم",
+        // Hero (Home Page) - ترجمة محسنة
+        hero_badge: "نصنع مستقبل التكنولوجيا",
+        hero_title_1: "نحن نهندس",
         hero_title_2: "الذكاء الرقمي",
-        hero_desc: "في SaaSprite ندمج الذكاء الاصطناعي مع الهندسة البرمجية لبناء أنظمة مؤسساتية لا تعمل فقط، بل تتطور مع الوقت.",
+        hero_desc: "تدمج SaaSprite الذكاء الاصطناعي المتقدم مع هندسة البرمجيات الصلبة لبناء أنظمة مؤسساتية لا تعمل فحسب، بل تتطور وتتعلم.",
         btn_explore: "استكشف خدماتنا",
         btn_contact: "تواصل معنا",
 
-        // Stats
+        // Stats (Home Page)
         stat_uptime: "استقرار النظام",
-        stat_tech: "تقنيات المستقبل",
+        stat_tech: "جاهزية لعام 2026",
         stat_clients: "عملاء حول العالم",
-        stat_security: "أمان بنكي",
+        stat_sec_val: "آمن 100%",      // <-- New Key Translated
+        stat_security: "بنية تحتية بنكية",
 
-        // Services
+        // ... (Services, Blog, Bio translated keys)
         srv_label: "نظامنا البيئي",
         srv_title: "قدرات برمجية شاملة",
         srv_odoo_title: "تخصيص أنظمة Odoo",
@@ -84,12 +86,12 @@ export const resources = {
         srv_auto_title: "أتمتة الأعمال",
         srv_auto_desc: "تقليل التكاليف التشغيلية بنسبة 60% من خلال مسارات عمل ذكية وآلية.",
         srv_med_title: "أنظمة قطاعية متخصصة",
-
-        // Blog
+        srv_re_title: "نظام تشغيل التطوير العقاري",
+        srv_re_desc: "للمطورين: إدارة مخزون الوحدات، المبيعات على الخارطة، وخطط الدفع.",
+        srv_pm_title: "إدارة الأملاك والتأجير",
+        srv_pm_desc: "للتأجير: إدارة شاملة لدورة حياة المستأجر، العقود، وتحصيل الإيجارات.",
         blog_title: "رؤى",
         blog_subtitle: "أفكار هندسية حول المشهد الرقمي لعام 2026.",
-
-        // Bio & Contact
         bio_role: "بيت برمجيات عالمي",
         bio_wa: "تواصل عبر واتساب",
         bio_email: "info@saasprite.com",
