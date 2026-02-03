@@ -139,28 +139,49 @@ const router = {
 const toggleMobileMenu = () => {
     const menu = document.getElementById('mobile-menu');
     
-    // Check if hidden
-    if (menu.classList.contains('hidden')) {
-        // Open Menu
+    // هل القائمة مفتوحة الآن؟
+    if (!menu.classList.contains('hidden')) {
+        // === أمر الإغلاق (Close) ===
+        // 1. تغيير الأنيميشن من دخول إلى خروج
+        menu.classList.remove('animate__fadeInDown');
+        menu.classList.add('animate__fadeOutUp');
+        
+        // 2. انتظار انتهاء الأنيميشن (نصف ثانية تقريباً) ثم الإخفاء الفعلي
+        setTimeout(() => {
+            menu.classList.add('hidden');
+            menu.classList.remove('flex');
+            // تنظيف الكلاسات للمرة القادمة
+            menu.classList.remove('animate__animated', 'animate__fadeOutUp', 'animate__faster');
+        }, 300); // 300ms متوافق مع animate__faster
+
+    } else {
+        // === أمر الفتح (Open) ===
         menu.classList.remove('hidden');
         menu.classList.add('flex');
-        // Add animation classes dynamically
-        menu.classList.add('animate__animated', 'animate__fadeInDown');
-    } else {
-        // Close Menu
-        menu.classList.add('hidden');
-        menu.classList.remove('flex');
-        // Clean up animation classes so they can run again next time
-        menu.classList.remove('animate__animated', 'animate__fadeInDown');
+        // إضافة أنيميشن الدخول + السرعة
+        menu.classList.add('animate__animated', 'animate__fadeInDown', 'animate__faster');
     }
 };
 
 const mobileNavigate = (route) => {
+    // نغلق القائمة بنفس الطريقة الناعمة، ثم ننتقل
     const menu = document.getElementById('mobile-menu');
-    menu.classList.add('hidden');
-    menu.classList.remove('flex');
-    menu.classList.remove('animate__animated', 'animate__fadeInDown'); // Cleanup
-    router.navigate(route);
+    
+    if (!menu.classList.contains('hidden')) {
+        menu.classList.remove('animate__fadeInDown');
+        menu.classList.add('animate__fadeOutUp');
+        
+        setTimeout(() => {
+            menu.classList.add('hidden');
+            menu.classList.remove('flex');
+            menu.classList.remove('animate__animated', 'animate__fadeOutUp', 'animate__faster');
+            
+            // الانتقال للصفحة المطلوبة
+            router.navigate(route);
+        }, 300);
+    } else {
+        router.navigate(route);
+    }
 };
 
 // --- Initialization ---
