@@ -10,7 +10,7 @@ export const resources = {
         cta_start: "Start Project",
         tagline_short: "Enterprise Solutions",
         
-        // Hero (Home)
+        // Hero
         hero_badge: "Engineering the Future",
         hero_title_1: "We Architect",
         hero_title_2: "Digital Intelligence",
@@ -18,7 +18,7 @@ export const resources = {
         btn_explore: "Explore Solutions",
         btn_contact: "Get in Touch",
         
-        // Stats (Home)
+        // Stats
         stat_uptime: "System Uptime",
         stat_tech: "Ready Tech Stack",
         stat_clients: "Enterprise Clients",
@@ -36,6 +36,12 @@ export const resources = {
         srv_auto_desc: "Reduce operational costs by 60% via intelligent automated workflows.",
         srv_med_title: "Specialized Systems",
         
+        // Medical & Booking (ADDED KEYS)
+        srv_med_center: "Medical Centers",
+        srv_med_desc: "Full clinic management, EMR, and patient portals.",
+        srv_booking: "Booking Engines",
+        srv_booking_desc: "Real-time reservation systems for hotels and services.",
+
         // Real Estate Keys
         srv_re_title: "Real Estate OS",
         srv_re_desc: "For Developers: Manage unit inventory, off-plan sales, and payment plans.",
@@ -72,17 +78,17 @@ export const resources = {
         cta_start: "ابدأ مشروعك",
         tagline_short: "حلول تقنية للمؤسسات",
 
-        // Hero (Home)
+        // Hero
         hero_badge: "نهندس المستقبل",
         hero_title_1: "نحن نهندس",
         hero_title_2: "الذكاء الرقمي",
-        hero_desc: "تدمج SaaSprite الذكاء الاصطناعي المتقدم مع هندسة البرمجيات الصلبة لبناء أنظمة مؤسساتية لا تعمل فحسب، بل تتطور وتتعلم.",
+        hero_desc: "في SaaSprite ندمج الذكاء الاصطناعي مع الهندسة البرمجية لبناء أنظمة مؤسساتية لا تعمل فقط، بل تتطور وتتعلم.",
         btn_explore: "استكشف خدماتنا",
         btn_contact: "تواصل معنا",
 
-        // Stats (Home)
+        // Stats
         stat_uptime: "استقرار النظام",
-        stat_tech: "جاهزية لعام 2026",
+        stat_tech: "تقنيات المستقبل",
         stat_clients: "عملاء حول العالم",
         stat_sec_val: "آمن 100%",
         stat_security: "أمان بنكي",
@@ -97,6 +103,12 @@ export const resources = {
         srv_auto_title: "أتمتة الأعمال",
         srv_auto_desc: "تقليل التكاليف التشغيلية بنسبة 60% من خلال مسارات عمل ذكية وآلية.",
         srv_med_title: "أنظمة قطاعية متخصصة",
+
+        // Medical & Booking (ADDED KEYS TRANSLATED)
+        srv_med_center: "المراكز الطبية",
+        srv_med_desc: "إدارة شاملة للعيادات، السجلات الطبية (EMR)، وبوابات المرضى.",
+        srv_booking: "محركات الحجز",
+        srv_booking_desc: "أنظمة حجز فورية للفنادق والخدمات.",
 
         // Real Estate Keys
         srv_re_title: "نظام تشغيل التطوير العقاري",
