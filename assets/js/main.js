@@ -1,4 +1,3 @@
-// assets/js/main.js
 import { resources, blogPosts } from './data.js';
 import { ParticleNetwork } from './engine.js';
 
@@ -19,31 +18,67 @@ const langManager = {
         const langBtn = document.getElementById('current-lang');
         if(langBtn) langBtn.innerText = lang === 'ar' ? 'EN' : 'AR';
 
+        // Translate everything visible
         document.querySelectorAll('[data-i18n]').forEach(el => {
             const key = el.getAttribute('data-i18n');
             if (resources[lang][key]) {
                 el.innerText = resources[lang][key];
             }
         });
-        router.renderBlog();
+        
+        // If we are on blog page, translate dynamic cards too
+        if(document.getElementById('blog-grid')) {
+            router.renderBlogCards();
+        }
     }
 };
 
-// --- Router ---
+// --- Advanced Router (The Injector) ---
 const router = {
-    navigate(viewId) {
-        document.querySelectorAll('.page-view').forEach(el => el.classList.add('hidden'));
-        const target = document.getElementById(`view-${viewId}`);
-        if (target) {
-            target.classList.remove('hidden');
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+    cache: {}, // To store loaded pages so we don't fetch again
+    
+    async navigate(viewId) {
+        const container = document.getElementById('app-container');
+        
+        // 1. Show Loading State (Optional optimization)
+        // container.style.opacity = '0.5';
+
+        // 2. Check Cache or Fetch
+        if (!this.cache[viewId]) {
+            try {
+                const response = await fetch(`views/${viewId}.html`);
+                if (!response.ok) throw new Error('Page not found');
+                this.cache[viewId] = await response.text();
+            } catch (error) {
+                console.error(error);
+                container.innerHTML = `<div class="text-center py-20 text-red-500">Error loading page: ${viewId}</div>`;
+                return;
+            }
         }
+
+        // 3. Inject Content
+        container.innerHTML = this.cache[viewId];
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+
+        // 4. Post-Load Logic
+        langManager.update(); // Apply translations to the new HTML
+        
+        if (viewId === 'blog') {
+            this.renderBlogCards();
+        }
+
+        // 5. Re-attach any specific event listeners if needed
+        // container.style.opacity = '1';
     },
-    renderBlog() {
+
+    renderBlogCards() {
         const container = document.getElementById('blog-grid');
-        if(!container) return;
+        if(!container) return; // Safety check
         const lang = langManager.current;
         
+        // Clear before rendering to avoid duplicates if called multiple times
+        container.innerHTML = ''; 
+
         container.innerHTML = blogPosts.map(post => `
             <div class="glass-card rounded-3xl overflow-hidden group cursor-pointer">
                 <div class="h-48 bg-${post.color}-500/10 flex items-center justify-center p-8 relative">
@@ -77,8 +112,8 @@ window.addEventListener('DOMContentLoaded', () => {
     // 2. Init Engine
     new ParticleNetwork('canvas-bg');
     
-    // 3. Init Lang & Blog
-    langManager.update();
+    // 3. Load Homepage by default
+    router.navigate('home');
 
     // 4. Mouse Glow
     const glow = document.getElementById('mouse-glow');
@@ -89,7 +124,7 @@ window.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // 5. Expose functions to HTML (Global Scope)
+    // 5. Expose globally for HTML onclick events
     window.router = router;
     window.langManager = langManager;
 });
