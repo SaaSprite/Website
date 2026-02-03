@@ -40,12 +40,10 @@ const router = {
     async navigate(viewId) {
         const container = document.getElementById('app-container');
         
-        // 1. Show Loading State (Optional optimization)
-        // container.style.opacity = '0.5';
-
-        // 2. Check Cache or Fetch
+        // Check Cache or Fetch
         if (!this.cache[viewId]) {
             try {
+                // Here we fetch the file from the 'views' folder
                 const response = await fetch(`views/${viewId}.html`);
                 if (!response.ok) throw new Error('Page not found');
                 this.cache[viewId] = await response.text();
@@ -56,19 +54,16 @@ const router = {
             }
         }
 
-        // 3. Inject Content
+        // Inject Content
         container.innerHTML = this.cache[viewId];
         window.scrollTo({ top: 0, behavior: 'smooth' });
 
-        // 4. Post-Load Logic
+        // Post-Load Logic
         langManager.update(); // Apply translations to the new HTML
         
         if (viewId === 'blog') {
             this.renderBlogCards();
         }
-
-        // 5. Re-attach any specific event listeners if needed
-        // container.style.opacity = '1';
     },
 
     renderBlogCards() {
@@ -76,7 +71,6 @@ const router = {
         if(!container) return; // Safety check
         const lang = langManager.current;
         
-        // Clear before rendering to avoid duplicates if called multiple times
         container.innerHTML = ''; 
 
         container.innerHTML = blogPosts.map(post => `
