@@ -135,6 +135,23 @@ const router = {
     }
 };
 
+// --- Mobile Menu Logic (Moved from HTML) ---
+const toggleMobileMenu = () => {
+    const menu = document.getElementById('mobile-menu');
+    if (menu.classList.contains('hidden-menu')) {
+        menu.classList.remove('hidden-menu');
+        menu.classList.add('visible-menu');
+    } else {
+        menu.classList.add('hidden-menu');
+        menu.classList.remove('visible-menu');
+    }
+};
+
+const mobileNavigate = (route) => {
+    toggleMobileMenu(); // Close menu
+    router.navigate(route); // Navigate
+};
+
 // --- Initialization ---
 window.addEventListener('DOMContentLoaded', () => {
     setTimeout(() => {
@@ -158,4 +175,6 @@ window.addEventListener('DOMContentLoaded', () => {
 
     window.router = router;
     window.langManager = langManager;
+    window.toggleMobileMenu = toggleMobileMenu;
+    window.mobileNavigate = mobileNavigate;
 });
