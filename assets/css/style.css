@@ -1,0 +1,133 @@
+<style>
+        /* * GLOBAL STYLES & RESET 
+         * =====================
+         */
+        :root {
+            --cursor-size: 600px;
+            --primary-glow: radial-gradient(circle, rgba(16, 185, 129, 0.15) 0%, transparent 70%);
+        }
+
+        body {
+            background-color: #020617;
+            color: #f8fafc;
+            overflow-x: hidden;
+            /* Logic: Use Arabic font if RTL, otherwise Latin font */
+            font-family: 'IBM Plex Sans Arabic', sans-serif;
+        }
+
+        html[dir="ltr"] body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        /* * PARTICLE CANVAS LAYER 
+         * =====================
+         */
+        #canvas-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            pointer-events: none;
+        }
+
+        /* * MOUSE INTERACTION LAYER 
+         * =======================
+         */
+        #mouse-glow {
+            position: fixed;
+            width: var(--cursor-size);
+            height: var(--cursor-size);
+            background: var(--primary-glow);
+            border-radius: 50%;
+            pointer-events: none;
+            transform: translate(-50%, -50%);
+            z-index: -1;
+            transition: opacity 0.5s ease;
+            mix-blend-mode: screen;
+        }
+
+        /* * GLASSMORPHISM UTILITIES 
+         * =======================
+         */
+        .glass {
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .glass-card {
+            background: linear-gradient(145deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.01) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .glass-card:hover {
+            border-color: #10b981;
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px -10px rgba(16, 185, 129, 0.1);
+        }
+
+        /* * TYPOGRAPHY & ANIMATIONS 
+         * =======================
+         */
+        .gradient-text {
+            background: linear-gradient(135deg, #34d399 0%, #3b82f6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-link {
+            position: relative;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0; /* Changed dynamically via JS for RTL */
+            background-color: #10b981;
+            transition: width 0.3s;
+        }
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        /* Bio Page Specific Styles */
+        .bio-btn {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            padding: 1.25rem;
+            margin-bottom: 1rem;
+            border-radius: 1rem;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+        .bio-btn:hover {
+            background: rgba(16, 185, 129, 0.1);
+            border-color: #10b981;
+            padding-inline-start: 1.5rem; /* Logic for RTL padding */
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #020617; }
+        ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #10b981; }
+
+        /* Loader */
+        #loader {
+            position: fixed; inset: 0; background: #020617; z-index: 9999;
+            display: flex; justify-content: center; align-items: center;
+        }
+    </style>
