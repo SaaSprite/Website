@@ -1,6 +1,9 @@
 import { resources, blogPosts } from './data.js';
 import { ParticleNetwork } from './engine.js';
 
+// --- State ---
+let currentArticleId = null;
+
 // --- Language Manager ---
 const langManager = {
     current: 'ar',
@@ -18,7 +21,7 @@ const langManager = {
         const langBtn = document.getElementById('current-lang');
         if(langBtn) langBtn.innerText = lang === 'ar' ? 'EN' : 'AR';
 
-        // Translate everything visible
+        // Translate Static Elements
         document.querySelectorAll('[data-i18n]').forEach(el => {
             const key = el.getAttribute('data-i18n');
             if (resources[lang][key]) {
@@ -26,65 +29,105 @@ const langManager = {
             }
         });
         
-        // If we are on blog page, translate dynamic cards too
+        // Re-render Blog Grid if visible
         if(document.getElementById('blog-grid')) {
             router.renderBlogCards();
+        }
+
+        // Re-render Article if open
+        if(currentArticleId !== null && document.getElementById('art-title')) {
+            router.populateArticle(currentArticleId);
         }
     }
 };
 
-// --- Advanced Router (The Injector) ---
+// --- Advanced Router ---
 const router = {
-    cache: {}, // To store loaded pages so we don't fetch again
+    cache: {}, 
     
     async navigate(viewId) {
+        // If leaving article view, reset ID
+        if(viewId !== 'article') currentArticleId = null;
+
         const container = document.getElementById('app-container');
         
-        // Check Cache or Fetch
         if (!this.cache[viewId]) {
             try {
-                // Here we fetch the file from the 'views' folder
                 const response = await fetch(`views/${viewId}.html`);
                 if (!response.ok) throw new Error('Page not found');
                 this.cache[viewId] = await response.text();
             } catch (error) {
                 console.error(error);
-                container.innerHTML = `<div class="text-center py-20 text-red-500">Error loading page: ${viewId}</div>`;
                 return;
             }
         }
 
-        // Inject Content
         container.innerHTML = this.cache[viewId];
         window.scrollTo({ top: 0, behavior: 'smooth' });
-
+        
         // Post-Load Logic
-        langManager.update(); // Apply translations to the new HTML
+        langManager.update();
         
         if (viewId === 'blog') {
             this.renderBlogCards();
         }
     },
 
+    // Function to open specific article
+    async openArticle(id) {
+        await this.navigate('article'); // Load the template first
+        this.populateArticle(id);
+        currentArticleId = id;
+    },
+
+    // Fill the template with data
+    populateArticle(id) {
+        const post = blogPosts.find(p => p.id === id);
+        if(!post) return;
+
+        const lang = langManager.current;
+
+        // Elements
+        const titleEl = document.getElementById('art-title');
+        const catEl = document.getElementById('art-cat');
+        const dateEl = document.getElementById('art-date');
+        const bodyEl = document.getElementById('art-body');
+
+        if(titleEl) {
+            titleEl.innerText = post.title[lang];
+            catEl.innerText = post.category[lang];
+            dateEl.innerText = post.date[lang];
+            bodyEl.innerHTML = post.content[lang]; // Use innerHTML for formatting
+            
+            // Back button translation handling
+            const backBtn = document.querySelector('[data-i18n="back_to_blog"]');
+            if(backBtn) backBtn.innerText = lang === 'ar' ? 'العودة للمقالات' : 'Back to Insights';
+        }
+    },
+
     renderBlogCards() {
         const container = document.getElementById('blog-grid');
-        if(!container) return; // Safety check
+        if(!container) return;
         const lang = langManager.current;
         
         container.innerHTML = ''; 
 
         container.innerHTML = blogPosts.map(post => `
-            <div class="glass-card rounded-3xl overflow-hidden group cursor-pointer">
+            <div class="glass-card rounded-3xl overflow-hidden group cursor-pointer" onclick="router.openArticle(${post.id})">
                 <div class="h-48 bg-${post.color}-500/10 flex items-center justify-center p-8 relative">
                     <div class="absolute inset-0 bg-gradient-to-t from-[#020617] to-transparent opacity-60"></div>
                     <i class="fa-solid fa-layer-group text-4xl text-${post.color}-500 opacity-50 group-hover:scale-110 transition-transform"></i>
                 </div>
                 <div class="p-8">
-                    <span class="text-[10px] text-${post.color}-400 font-bold uppercase tracking-widest border border-${post.color}-500/30 px-2 py-1 rounded mb-4 inline-block">${post.category[lang]}</span>
-                    <h4 class="text-xl font-bold mb-3 group-hover:text-brand-500 transition-colors">${post.title[lang]}</h4>
-                    <p class="text-slate-500 text-xs leading-relaxed">${post.desc[lang]}</p>
+                    <div class="flex justify-between items-center mb-4">
+                        <span class="text-[10px] text-${post.color}-400 font-bold uppercase tracking-widest border border-${post.color}-500/30 px-2 py-1 rounded">${post.category[lang]}</span>
+                        <span class="text-[10px] text-slate-500 font-mono">${post.date[lang]}</span>
+                    </div>
+                    <h4 class="text-xl font-bold mb-3 group-hover:text-brand-500 transition-colors line-clamp-2">${post.title[lang]}</h4>
+                    <p class="text-slate-500 text-xs leading-relaxed line-clamp-3">${post.desc[lang]}</p>
                     <div class="mt-6 flex items-center gap-2 text-${post.color}-400 text-xs font-bold uppercase tracking-wider group-hover:gap-4 transition-all">
-                        <span>Read Article</span> <i class="fa-solid fa-arrow-${lang === 'ar' ? 'left' : 'right'}"></i>
+                        <span>${lang === 'ar' ? 'اقرأ المزيد' : 'Read Article'}</span> 
+                        <i class="fa-solid fa-arrow-${lang === 'ar' ? 'left' : 'right'}"></i>
                     </div>
                 </div>
             </div>
@@ -94,7 +137,6 @@ const router = {
 
 // --- Initialization ---
 window.addEventListener('DOMContentLoaded', () => {
-    // 1. Remove Loader
     setTimeout(() => {
         const loader = document.getElementById('loader');
         if(loader) {
@@ -103,13 +145,9 @@ window.addEventListener('DOMContentLoaded', () => {
         }
     }, 1000);
 
-    // 2. Init Engine
     new ParticleNetwork('canvas-bg');
-    
-    // 3. Load Homepage by default
     router.navigate('home');
 
-    // 4. Mouse Glow
     const glow = document.getElementById('mouse-glow');
     document.addEventListener('mousemove', (e) => {
         if(glow) {
@@ -118,7 +156,6 @@ window.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // 5. Expose globally for HTML onclick events
     window.router = router;
     window.langManager = langManager;
 });
