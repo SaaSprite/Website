@@ -2,22 +2,29 @@
 
 export const resources = {
     en: {
+        // Nav
         nav_home: "Home",
         nav_services: "Services",
         nav_blog: "Blog",
         nav_bio: "Connect",
         cta_start: "Start Project",
         tagline_short: "Enterprise Solutions",
+        
+        // Hero
         hero_badge: "Engineering the Future",
         hero_title_1: "We Architect",
         hero_title_2: "Digital Intelligence",
         hero_desc: "SaaSprite integrates advanced AI with robust software engineering to build enterprise systems that don't just work—they evolve.",
         btn_explore: "Explore Solutions",
         btn_contact: "Get in Touch",
+        
+        // Stats
         stat_uptime: "System Uptime",
         stat_tech: "Ready Tech Stack",
         stat_clients: "Enterprise Clients",
         stat_security: "Bank-Grade Security",
+
+        // Services
         srv_label: "Core Services",
         srv_title: "Full-Stack Capabilities",
         srv_odoo_title: "Odoo ERP Customization",
@@ -27,29 +34,47 @@ export const resources = {
         srv_auto_title: "Business Automation",
         srv_auto_desc: "Reduce operational costs by 60% via intelligent automated workflows.",
         srv_med_title: "Specialized Systems",
+        
+        // Blog
         blog_title: "SaaSprite",
         blog_subtitle: "Engineering thoughts on the 2026 digital landscape.",
+        
+        // Bio & Contact
         bio_role: "Global Enterprise Software House",
-        bio_email: "Request Quotation",
+        bio_wa: "WhatsApp Support",
+        bio_email: "info@saasprite.com",
+        bio_linkedin: "LinkedIn",
+        bio_x: "X (Twitter)",
+        bio_insta: "Instagram",
+        bio_fb: "Facebook",
+        bio_tiktok: "TikTok",
+        bio_yt: "YouTube Channel",
         bio_portfolio: "Download Portfolio (PDF)"
     },
     ar: {
+        // Nav
         nav_home: "الرئيسية",
         nav_services: "خدماتنا",
         nav_blog: "المدونة",
         nav_bio: "تواصل معنا",
         cta_start: "ابدأ مشروعك",
         tagline_short: "حلول تقنية للمؤسسات",
+
+        // Hero
         hero_badge: "نهندس المستقبل",
         hero_title_1: "نحن نصمم",
         hero_title_2: "الذكاء الرقمي",
         hero_desc: "في SaaSprite ندمج الذكاء الاصطناعي مع الهندسة البرمجية لبناء أنظمة مؤسساتية لا تعمل فقط، بل تتطور مع الوقت.",
         btn_explore: "استكشف خدماتنا",
         btn_contact: "تواصل معنا",
+
+        // Stats
         stat_uptime: "استقرار النظام",
         stat_tech: "تقنيات المستقبل",
         stat_clients: "عملاء حول العالم",
         stat_security: "أمان بنكي",
+
+        // Services
         srv_label: "نظامنا البيئي",
         srv_title: "قدرات برمجية شاملة",
         srv_odoo_title: "تخصيص أنظمة Odoo",
@@ -59,10 +84,21 @@ export const resources = {
         srv_auto_title: "أتمتة الأعمال",
         srv_auto_desc: "تقليل التكاليف التشغيلية بنسبة 60% من خلال مسارات عمل ذكية وآلية.",
         srv_med_title: "أنظمة قطاعية متخصصة",
+
+        // Blog
         blog_title: "رؤى",
         blog_subtitle: "أفكار هندسية حول المشهد الرقمي لعام 2026.",
+
+        // Bio & Contact
         bio_role: "بيت برمجيات عالمي",
-        bio_email: "طلب عرض سعر",
+        bio_wa: "تواصل عبر واتساب",
+        bio_email: "info@saasprite.com",
+        bio_linkedin: "لينكد إن",
+        bio_x: "منصة X (تويتر)",
+        bio_insta: "انستغرام",
+        bio_fb: "فيسبوك",
+        bio_tiktok: "تيك توك",
+        bio_yt: "قناة اليوتيوب",
         bio_portfolio: "تحميل الملف التعريفي (PDF)"
     }
 };
