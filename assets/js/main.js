@@ -6,7 +6,7 @@ let currentArticleId = null;
 
 // --- Language Manager ---
 const langManager = {
-    current: 'ar',
+    current: 'en',
     toggle() {
         this.current = this.current === 'en' ? 'ar' : 'en';
         this.update();
