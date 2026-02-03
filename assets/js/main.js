@@ -138,16 +138,28 @@ const router = {
 // --- Mobile Menu Logic (Moved from HTML) ---
 const toggleMobileMenu = () => {
     const menu = document.getElementById('mobile-menu');
-    // التبديل البسيط والفعال: إخفاء وإظهار
-    menu.classList.toggle('hidden');
-    menu.classList.toggle('flex');
+    
+    // Check if hidden
+    if (menu.classList.contains('hidden')) {
+        // Open Menu
+        menu.classList.remove('hidden');
+        menu.classList.add('flex');
+        // Add animation classes dynamically
+        menu.classList.add('animate__animated', 'animate__fadeInDown');
+    } else {
+        // Close Menu
+        menu.classList.add('hidden');
+        menu.classList.remove('flex');
+        // Clean up animation classes so they can run again next time
+        menu.classList.remove('animate__animated', 'animate__fadeInDown');
+    }
 };
 
 const mobileNavigate = (route) => {
     const menu = document.getElementById('mobile-menu');
-    // إغلاق القائمة عند الانتقال
     menu.classList.add('hidden');
     menu.classList.remove('flex');
+    menu.classList.remove('animate__animated', 'animate__fadeInDown'); // Cleanup
     router.navigate(route);
 };
 
