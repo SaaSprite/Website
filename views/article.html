@@ -1,0 +1,36 @@
+<div id="view-article" class="page-view animate__animated animate__fadeIn">
+    <section class="py-12 px-6 min-h-screen">
+        <div class="max-w-4xl mx-auto">
+            
+            <button onclick="router.navigate('blog')" class="mb-10 flex items-center gap-2 text-slate-400 hover:text-brand-500 transition-colors group">
+                <i class="fa-solid fa-arrow-right rotate-180 group-hover:-translate-x-2 transition-transform rtl:rotate-0 rtl:group-hover:translate-x-2"></i>
+                <span class="text-sm font-bold uppercase tracking-widest" data-i18n="back_to_blog">Back to Insights</span>
+            </button>
+
+            <div id="article-content-wrapper" class="glass-card p-8 md:p-16 rounded-[3rem] border border-white/5">
+                <div class="mb-10 border-b border-white/10 pb-10">
+                    <div class="flex items-center gap-4 mb-6">
+                        <span id="art-cat" class="px-3 py-1 rounded-full bg-brand-500/10 text-brand-400 text-[10px] font-bold uppercase tracking-widest border border-brand-500/20">
+                            Category
+                        </span>
+                        <span id="art-date" class="text-slate-500 text-xs font-mono">Date</span>
+                    </div>
+                    <h1 id="art-title" class="text-3xl md:text-5xl font-black leading-tight text-white mb-6">
+                        Article Title
+                    </h1>
+                </div>
+
+                <div id="art-body" class="prose prose-invert prose-lg max-w-none text-slate-300 leading-relaxed space-y-6">
+                    </div>
+                
+                <div class="mt-16 pt-10 border-t border-white/10 text-center">
+                    <p class="text-slate-400 mb-6 italic">Ready to implement this solution?</p>
+                    <button onclick="router.navigate('bio')" class="bg-brand-600 hover:bg-brand-500 text-white px-8 py-3 rounded-xl font-bold transition-all shadow-lg shadow-brand-500/20">
+                        Discuss with SaaSprite
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </section>
+</div>
