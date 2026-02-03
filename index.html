@@ -11,7 +11,6 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;700;800&family=IBM+Plex+Sans+Arabic:wght@300;400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
     <link rel="stylesheet" href="assets/css/style.css">
 
     <script>
@@ -46,7 +45,6 @@
     <nav class="fixed w-full z-50 top-0 transition-all duration-300" id="navbar">
         <div class="max-w-7xl mx-auto px-6 py-4">
             <div class="glass rounded-2xl px-6 py-3 flex justify-between items-center relative z-50">
-                
                 <div class="flex items-center gap-3 cursor-pointer" onclick="router.navigate('home')">
                     <div class="w-10 h-10 bg-gradient-to-br from-brand-500 to-blue-600 rounded-lg flex items-center justify-center text-white font-bold shadow-lg shadow-brand-500/20">
                          <img src="assets/img/logo.png" alt="AI" class="w-8 h-8 object-contain">
@@ -71,14 +69,13 @@
                     <button onclick="router.navigate('bio')" class="hidden sm:block bg-brand-600 hover:bg-brand-500 text-white text-xs font-black px-5 py-2.5 rounded-xl transition-all shadow-lg shadow-brand-500/20" data-i18n="cta_start">
                         Start Project
                     </button>
-                    
-                    <button class="md:hidden text-slate-300 text-2xl ml-2" onclick="toggleMobileMenu()">
+                    <button class="md:hidden text-slate-300 text-2xl ml-2 focus:outline-none" onclick="toggleMobileMenu()">
                         <i class="fa-solid fa-bars"></i>
                     </button>
                 </div>
             </div>
 
-            <div id="mobile-menu" class="hidden-menu absolute top-24 left-6 right-6 glass rounded-2xl p-6 flex flex-col gap-4 z-40 md:hidden border border-white/10">
+            <div id="mobile-menu" class="hidden absolute top-24 left-6 right-6 glass rounded-2xl p-6 flex flex-col gap-4 z-40 md:hidden border border-white/10 shadow-2xl animate__animated animate__fadeInDown">
                 <button onclick="mobileNavigate('home')" class="text-left px-4 py-3 rounded-xl hover:bg-white/5 text-slate-300 font-bold uppercase text-xs tracking-widest" data-i18n="nav_home">Home</button>
                 <button onclick="mobileNavigate('services')" class="text-left px-4 py-3 rounded-xl hover:bg-white/5 text-slate-300 font-bold uppercase text-xs tracking-widest" data-i18n="nav_services">Services</button>
                 <button onclick="mobileNavigate('blog')" class="text-left px-4 py-3 rounded-xl hover:bg-white/5 text-slate-300 font-bold uppercase text-xs tracking-widest" data-i18n="nav_blog">Blog</button>
